@@ -3,8 +3,11 @@ package introduction;
 /** 字符串匹配问题 */
 public class Solution {
   public static void main(String[] args) {
-    System.out.println(kmp("hello", "ll"));
-    System.out.println(kmp("hell", ""));
+    //    System.out.println(sunday("hello", "ll"));
+    //    System.out.println(sunday("hell", ""));
+    //    System.out.println(sunday("aaaa", "bba"));
+    //    System.out.println(sunday("a", "a"));
+    System.out.println(sunday("mississippi", "sippia"));
   }
   // 通过双重循环暴力解决问题，时间复杂度差不多是O(N*N)
   public static int subStr(String haystack, String needle) {
@@ -65,14 +68,14 @@ public class Solution {
     int[] next = getNext(needleArry);
     int i = 0, j = 0;
     while (i < haystackLength && j < needleLength) {
-      if (haystackArry[i] == needleArry[j]) {
+      if (j == -1 || haystackArry[i] == needleArry[j]) {
         i++;
         j++;
       } else {
         j = next[j];
       }
     }
-    if (j > needleLength) {
+    if (j > needleLength - 1) {
       return i - needleLength;
     } else {
       return -1;
@@ -80,10 +83,10 @@ public class Solution {
   }
   // 生成next数组
   private static int[] getNext(char[] needleArry) {
-    int next[] = new int[needleArry.length];
+    int next[] = new int[needleArry.length + 1];
     next[0] = -1;
     int i = 0, j = -1;
-    while (i < next.length) {
+    while (i < needleArry.length) {
       if (j == -1 || needleArry[i] == needleArry[j]) {
         i++;
         j++;
@@ -93,5 +96,50 @@ public class Solution {
       }
     }
     return next;
+  }
+  // 使用sunday算法来求解
+  public static int sunday(String haystack, String needle) {
+    // 边界情况
+    if (haystack == null) {
+      return -1;
+    }
+    if (needle.equals("") || needle == null) {
+      return 0;
+    }
+    // 转数组
+    char[] haystackArry = haystack.toCharArray();
+    char[] needleArry = needle.toCharArray();
+    int haystackLength = haystack.length();
+    int needleLength = needle.length();
+
+    // 求解偏移数组，偏移数组的大小应该是ascii_size的范围
+    int[] move = new int[126];
+    for (int i = 0; i < 126; i++) {
+      move[i] = needleLength + 1;
+    }
+    // 从左向右扫描，needle字符中存在的字符对应位置的值等于当前字符到最优一个字符的距离+1
+    for (int i = 0; i < needleLength; i++) {
+      move[needleArry[i]] = needleLength - i;
+    }
+
+    // 进行匹配,其中s指向模式字符串第一个字符所在的源字符串的位置。j表示当前匹配成功的字符
+    int s = 0, j = 0;
+    while (j <= haystackLength - needleLength) {
+      // 每次进行新一轮匹配的时候j都要置零
+      j = 0;
+      while (s < haystackLength - needleLength || haystackArry[s + j] == needleArry[j]) {
+        j++;
+        if (j >= needleLength) {
+          return s;
+        }
+      }
+      // 失配情况下对s进行跳转
+      if (s < haystackLength - needleLength) {
+        s += move[haystackArry[s + needleLength]];
+      } else {
+        return -1;
+      }
+    }
+    return -1;
   }
 }
