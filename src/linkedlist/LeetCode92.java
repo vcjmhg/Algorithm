@@ -3,10 +3,16 @@ package linkedlist;
 /** 翻转指定范围内的链表节点 */
 public class LeetCode92 {
   public static void main(String[] args) {
-    //
+    // 1 1 2
+    ListNode testList1 = new ListNode(1);
+    testList1.next = new ListNode(2);
+    testList1.next.next = new ListNode(3);
+    testList1.next.next.next = new ListNode(4);
+
+    printList(reverseBetween(testList1, 2, 3));
   }
   // 基本思路：移动到m处然后进行翻转再进行拼接
-  public ListNode reverseBetween(ListNode head, int m, int n) {
+  public static ListNode reverseBetween(ListNode head, int m, int n) {
     if (head == null) {
       return null;
     }
@@ -26,9 +32,9 @@ public class LeetCode92 {
     ListNode temp = null, pre = null;
     // 进行翻转
     while (num <= n) {
+      num++;
       temp = head.next;
-      pre.next.next = pre;
-
+      head.next = pre;
       // 节点向前移动
       pre = head;
       head = temp;
@@ -40,12 +46,16 @@ public class LeetCode92 {
     return plain.next;
   }
 
-  class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int val) {
-      this.val = val;
+  // 打印节点内容
+  private static void printList(ListNode head) {
+    ListNode current = head;
+    if (current == null) {
+      return;
+    }
+    current = current.next;
+    while (current != null) {
+      System.out.print(" " + current.val);
+      current = current.next;
     }
   }
 }
