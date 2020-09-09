@@ -9,7 +9,7 @@ public class LeetCode92 {
     testList1.next.next = new ListNode(3);
     testList1.next.next.next = new ListNode(4);
 
-    printList(reverseBetween(testList1, 2, 3));
+    printList(reverseBetween(testList1, 1, 4));
   }
   // 基本思路：移动到m处然后进行翻转再进行拼接
   public static ListNode reverseBetween(ListNode head, int m, int n) {
@@ -18,9 +18,9 @@ public class LeetCode92 {
     }
     ListNode plain = new ListNode(-1);
     plain.next = head;
-    //		记录需要翻转的位置
+    // 记录需要翻转的位置
     int num = 1;
-    ListNode startBefore = null;
+    ListNode startBefore = plain;
     // 移动到第m个节点
     while (num < m) {
       startBefore = head;
@@ -52,7 +52,6 @@ public class LeetCode92 {
     if (current == null) {
       return;
     }
-    current = current.next;
     while (current != null) {
       System.out.print(" " + current.val);
       current = current.next;
