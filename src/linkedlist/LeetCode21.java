@@ -11,7 +11,7 @@ public class LeetCode21 {
     l2.next = new ListNode(3);
     l2.next.next = new ListNode(4);
     l2.next.next.next = new ListNode(5);
-    Util.printList(mergeTwoLists(l1, l2));
+    Util.printList(mergeTwoListsByReCursion(l1, l2));
   }
   // 合并两个有序链表
   public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
@@ -35,5 +35,21 @@ public class LeetCode21 {
       temp.next = l2;
     }
     return plainNode.next;
+  }
+  // 基本思路其实就是在每层递归只处理一个节点
+  public static ListNode mergeTwoListsByReCursion(ListNode l1, ListNode l2) {
+    if (l1 == null) {
+      return l2;
+    }
+    if (l2 == null) {
+      return l1;
+    }
+    if (l1.val < l2.val) {
+      l1.next = mergeTwoLists(l1.next, l2);
+      return l1;
+    } else {
+      l2.next = mergeTwoLists(l1, l2.next);
+      return l2;
+    }
   }
 }
