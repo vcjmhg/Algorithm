@@ -17,6 +17,17 @@ public class Util {
       current = current.next;
     }
   }
+  // 将数组初始化成链表
+  public static ListNode initNodeList(int a[]) {
+    ListNode headNode = new ListNode(0);
+    ListNode temp = headNode, newNode = null;
+    for (int i = 0; i < a.length; i++) {
+      newNode = new ListNode(a[i]);
+      temp.next = newNode;
+      temp = temp.next;
+    }
+    return headNode.next;
+  }
 }
 
 class ListNode {
