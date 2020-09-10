@@ -6,8 +6,9 @@ public class Solution {
     //    System.out.println(sunday("hello", "ll"));
     //    System.out.println(sunday("hell", ""));
     //    System.out.println(sunday("aaaa", "bba"));
-    //    System.out.println(sunday("a", "a"));
-    System.out.println(sunday("mississippi", "sippia"));
+    System.out.println(sunday("a", "b"));
+
+    System.out.println(sunday("aabaaabaaac", "aabaaac"));
   }
   // 通过双重循环暴力解决问题，时间复杂度差不多是O(N*N)
   public static int subStr(String haystack, String needle) {
@@ -121,13 +122,12 @@ public class Solution {
     for (int i = 0; i < needleLength; i++) {
       move[needleArry[i]] = needleLength - i;
     }
-
     // 进行匹配,其中s指向模式字符串第一个字符所在的源字符串的位置。j表示当前匹配成功的字符
     int s = 0, j = 0;
-    while (j <= haystackLength - needleLength) {
+    while (s <= haystackLength - needleLength) {
       // 每次进行新一轮匹配的时候j都要置零
       j = 0;
-      while (s < haystackLength - needleLength || haystackArry[s + j] == needleArry[j]) {
+      while (haystackArry[s + j] == needleArry[j]) {
         j++;
         if (j >= needleLength) {
           return s;
@@ -139,6 +139,7 @@ public class Solution {
       } else {
         return -1;
       }
+      //      s += move[haystackArry[s + needleLength]];
     }
     return -1;
   }
