@@ -1,11 +1,13 @@
 package linkedlist;
 
+import java.util.ArrayList;
+
 /** 按照要求重排链表 */
 public class LeetCode143 {
   public static void main(String[] args) {
     ListNode l1 = Util.initNodeList(new int[] {1, 2, 3, 4, 5});
     //    Util.printList(reverse(l1));
-    reorderList(l1);
+    reorderListByStorage(l1);
     Util.printList(l1);
   }
 
@@ -70,4 +72,39 @@ public class LeetCode143 {
     }
     return slow;
   }
+
+  /**
+   *  使用存储解决该问题
+   *  基本思路：将链表转换乘ArraryList类型然后从后向前来进行遍历
+   * @param head
+   */
+  public static void reorderListByStorage(ListNode head) {
+    //边界情况处理
+    if(head == null || head.next == null){
+      return;
+    }
+    //将链表转换乘ArrayList进行操作
+    ArrayList<ListNode> list = new ArrayList<ListNode>();
+    while (head != null){
+      list.add(head);
+      head = head.next;
+    }
+    //通过双指针连接乘新的链表
+    int i=0,j=list.size()-1;
+    while (i<j){
+      list.get(i).next = list.get(j);
+      i++;
+      //边界情况处理 i == j
+      if(i == j){
+        break;
+      }
+      list.get(j).next=list.get(i);
+      j--;
+    }
+    //将最后一个节点的next置空
+    list.get(i).next = null;
+  }
+
+  // 使用递归解决该问题
+
 }
