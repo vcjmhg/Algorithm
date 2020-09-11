@@ -1,13 +1,14 @@
 package linkedlist;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** 按照要求重排链表 */
 public class LeetCode143 {
   public static void main(String[] args) {
     ListNode l1 = Util.initNodeList(new int[] {1, 2, 3, 4, 5});
     //    Util.printList(reverse(l1));
-    reorderListByStorage(l1);
+    reorderListByRecursion(l1);
     Util.printList(l1);
   }
 
@@ -106,5 +107,49 @@ public class LeetCode143 {
   }
 
   // 使用递归解决该问题
+  public static void reorderListByRecursion(ListNode head){
+    //边界情况处理，对长度小于2的情况直接返回
+    if (head == null || head.next == null || head.next.next == null){
+      return;
+    }
+    ListNode current = head;
+    int len=0;
+    //计算链表长度
+    while (current != null){
+      len++;
+      current = current.next;
+    }
+
+    // 对链表进行递归处理
+    reorderListHelper(head, len);
+
+  }
+
+  /**
+   * 对一个链表进行递归处理
+   * @param head
+   * @param len
+   */
+  private static ListNode reorderListHelper(ListNode head, int len) {
+    //递归终止条件,必须要对返回的next进行设置
+    if (len == 1){
+      ListNode outTail = head.next;
+      head.next = null;
+      return head;
+    }
+    if (len == 2){
+      ListNode outTail = head.next.next;
+      head.next.next = null;
+      return head.next;
+    }
+    //得到对应的尾节点。在递归的每一层处理了第一个节点和最后一个节点，并且返回最后一个节点的下一个节点即新的末尾节点
+    ListNode tail = reorderListHelper(head.next,len-2);
+    ListNode subHead = head.next;
+    //获取tial节点的下一个节点作为末尾节点
+    ListNode outTail = tail.next;
+    head.next = tail;
+    tail.next = subHead;
+    return outTail;
+  }
 
 }
