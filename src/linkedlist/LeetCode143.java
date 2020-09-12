@@ -135,12 +135,12 @@ public class LeetCode143 {
     if (len == 1){
       ListNode outTail = head.next;
       head.next = null;
-      return head;
+      return outTail;
     }
     if (len == 2){
       ListNode outTail = head.next.next;
       head.next.next = null;
-      return head.next;
+      return outTail;
     }
     //得到对应的尾节点。在递归的每一层处理了第一个节点和最后一个节点，并且返回最后一个节点的下一个节点即新的末尾节点
     ListNode tail = reorderListHelper(head.next,len-2);
