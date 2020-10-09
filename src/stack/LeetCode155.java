@@ -25,7 +25,7 @@ public class LeetCode155 {
 class MinStack {
     private int capisity = 5;
     private int vals[];
-    //栈当前的访问指针
+    //栈当前的访问指针基本的使用方法
     private int current;
     /** initialize your data structure here. */
     public MinStack() {
