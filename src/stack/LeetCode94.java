@@ -14,7 +14,7 @@ public class LeetCode94 {
     TreeNode node2 = new TreeNode(2);
     node.left = node1;
     node.right = node2;
-    List<Integer> result = new LeetCode94().inorderTraversal(node);
+    List<Integer> result = new LeetCode94().inorderTravsersalByReverse(node);
     System.out.println("result is :" + result);
   }
 
@@ -33,5 +33,20 @@ public class LeetCode94 {
       }
     }
     return reslut;
+  }
+
+  public List<Integer> inorderTravsersalByReverse(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    inorder(root, result);
+    return result;
+  }
+
+  private void inorder(TreeNode root, List<Integer> result) {
+    if (root == null) {
+      return;
+    }
+    inorder(root.left, result);
+    result.add(root.val);
+    inorder(root.right, result);
   }
 }
