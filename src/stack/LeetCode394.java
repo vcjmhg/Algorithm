@@ -24,7 +24,6 @@ public class LeetCode394 {
       if (isDigit(ch)) {
         // if ch is digital , get this digital and put it into stack
         String digitalStr = getDigital(s);
-        
         stack.push(digitalStr);
       } else if (isLetter(ch) || ch == '[') {
         // if ch is letter  , put ch into stack.
