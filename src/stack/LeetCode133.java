@@ -32,23 +32,27 @@ public class LeetCode133 {
       return null;
     }
     Queue<Node> queue = new LinkedList<>();
-    Map<Node,Node> map = new HashMap<>();
+    Map<Node, Node> map = new HashMap<>();
     queue.add(node);
     map.put(node, new Node(node.val));
-    
+
     while (!queue.isEmpty()) {
-      Node cur = queue.poll();
-      for (Node n:cur.neighbors) {
-        if (!map.containsKey(n)) {
-          map.put(n, new Node(n.val));
-          queue.add(n);
+      int sz = queue.size();
+      for (int i=0;i<sz;i++){
+        Node cur = queue.poll();
+        for (Node n : cur.neighbors) {
+          if (!map.containsKey(n)) {
+            map.put(n, new Node(n.val));
+            queue.add(n);
+          }
+          // 建立与邻接节点关系
+          map.get(cur).neighbors.add(map.get(n));
         }
-        //建立与邻接节点关系
-        map.get(cur).neighbors.add(map.get(n));
       }
     }
     return map.get(node);
   }
+
 
   //  //通过递归来进行克隆
   //  public Node cloneGraphByReverse(Node node) {
