@@ -21,7 +21,7 @@ public class LeetCode133 {
     node4.neighbors.add(node1);
     node4.neighbors.add(node3);
 
-    Node clone = new LeetCode133().cloneGraph(node1);
+    Node clone = new LeetCode133().DFS(node1);
     System.out.println(clone);
   }
 
@@ -38,7 +38,7 @@ public class LeetCode133 {
 
     while (!queue.isEmpty()) {
       int sz = queue.size();
-      for (int i=0;i<sz;i++){
+      for (int i = 0; i < sz; i++) {
         Node cur = queue.poll();
         for (Node n : cur.neighbors) {
           if (!map.containsKey(n)) {
@@ -53,7 +53,24 @@ public class LeetCode133 {
     return map.get(node);
   }
 
+  Map<Node, Node> map = new HashMap<>();
 
+  public Node DFS(Node node) {
+    // 终止条件
+    if (node == null) {
+      return node;
+    }
+    //已经复制过的话，直接返回复制过的节点
+    if(map.containsKey(node)) {
+      return map.get(node);
+    }
+    // 标记访问，并创建拷贝节点
+    map.put(node, new Node(node.val));
+    for (Node n : node.neighbors) {
+      map.get(node).neighbors.add(DFS(n));
+    }
+    return map.get(node);
+  }
   //  //通过递归来进行克隆
   //  public Node cloneGraphByReverse(Node node) {
   //
