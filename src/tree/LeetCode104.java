@@ -29,4 +29,14 @@ public class LeetCode104 {
     }
     return step;
   }
+  //use Reverse to get the depth of the tree
+  public int maxDepthByReverse(TreeNode root) {
+    // border judge
+    if (root == null) {
+      return 0;
+    }
+    int left = maxDepth(root.left);
+    int right = maxDepth(root.right);
+    return Math.max(left, right) + 1;
+  }
 }
