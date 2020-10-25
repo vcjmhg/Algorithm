@@ -43,6 +43,8 @@ package com.shuzijun.leetcode.editor.cn;
 
 import tree.TreeNode;
 
+import java.util.Stack;
+
 public class ValidateBinarySearchTree {
   public static void main(String[] args) {
     Solution solution = new ValidateBinarySearchTree().new Solution();
@@ -54,20 +56,24 @@ public class ValidateBinarySearchTree {
    */
   class Solution {
     public boolean isValidBST(TreeNode root) {
-      return isValidBST(root, null, null);
-    }
-
-    private boolean isValidBST(TreeNode root, TreeNode min, TreeNode max) {
       if (root == null) {
         return true;
       }
-      if (min != null && root.val <= min.val) {
-        return false;
+      Stack<TreeNode> stack = new Stack<>();
+      TreeNode pre = null;
+      while (root != null || !stack.isEmpty()) {
+        while (root != null) {
+          stack.push(root);
+          root = root.left;
+        }
+        root = stack.pop();
+        if (pre != null && root.val <= pre.val) {
+          return false;
+        }
+        pre = root;
+        root = root.right;
       }
-      if (max != null && root.val >= max.val) {
-        return false;
-      }
-      return isValidBST(root.left, min, root) && isValidBST(root.right, root, max);
+      return true;
     }
   }
   // leetcode submit region end(Prohibit modification and deletion)
