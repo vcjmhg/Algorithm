@@ -1,9 +1,6 @@
 package tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
-import java.util.TreeMap;
 
 public class Util {
   public static void main(String[] args) {
@@ -16,28 +13,45 @@ public class Util {
     root.right = node2;
     node2.left = node3;
     node2.right = node4;
-    new Util().preOrder(root);
+    new Util().postOrderTraverse(root);
   }
 
-  public void preOrder(TreeNode root) {
+  public void tranverse(TreeNode root) {
     // 边界判断
     if (root == null) {
       return;
     }
     Stack<TreeNode> stack = new Stack<>();
-    stack.add(root);
-    TreeNode cur = root;
-    while (!stack.isEmpty() || cur != null) {
-      if (cur != null) {
-//        System.out.println(cur.val);
-        stack.add(cur);
-        cur = cur.left;
+    TreeNode current = root;
+    while (current != null || !stack.isEmpty()) {
+      if (current != null) {
+        System.out.println(current.val);
+        stack.push(current);
+        current = current.left;
       } else {
-        cur = stack.pop();
-        System.out.println(cur.val);
-        cur = cur.right;
+        current = stack.pop();
+//        System.out.println(current.val);
+        current = current.right;
       }
     }
   }
+  //使用双栈来实现后序遍历
+  public void postOrderTraverse(TreeNode root){
+    Stack<TreeNode> stack = new Stack<>();
+    Stack<Integer> res = new Stack<>();
+    TreeNode cur = root;
+    while (cur!=null || !stack.isEmpty()) {
+      if (cur!=null){
+        stack.push(cur);
+        res.push(cur.val);
+        cur = cur.right; //修改处
+      }else{
+        cur = stack.pop();
+        cur = cur.left;  // 修改处
+      }
+    }
+    while (!res.isEmpty()){
+      System.out.println(res.pop());
+    }
+  }
 }
-
