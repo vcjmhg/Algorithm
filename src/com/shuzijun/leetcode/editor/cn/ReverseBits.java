@@ -56,15 +56,12 @@ public class ReverseBits {
   public class Solution {
     // you need treat n as an unsigned value
     public int reverseBits(int n) {
-      int power = 31;
-      int result = 0;
-      // don't use "n != 0" to judge because the bit count of n can be not 32
-      for (int i = 0; power >= 0; i++) {
-        result += (n & 1) << power;
-        n = n >> 1;
-        power--;
-      }
-      return result;
+      n = ((n & 0xffff0000) >>> 16) | ((n & 0x0000ffff) << 16);
+      n = ((n & 0xff00ff00) >>> 8) | ((n & 0x00ff00ff) << 8);
+      n = ((n & 0xf0f0f0f0) >>> 4) | ((n & 0x0f0f0f0f) << 4);
+      n = ((n & 0xcccccccc) >>> 2) | ((n & 0x33333333) << 2);
+      n = ((n & 0xaaaaaaaa) >>> 1) | ((n & 0x55555555) << 1);
+      return n;
     }
   }
   // leetcode submit region end(Prohibit modification and deletion)
