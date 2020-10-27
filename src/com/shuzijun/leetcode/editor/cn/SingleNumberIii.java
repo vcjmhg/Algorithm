@@ -40,28 +40,30 @@
 
 package com.shuzijun.leetcode.editor.cn;
 
-import java.util.*;
-
 public class SingleNumberIii {
   public static void main(String[] args) {
     Solution solution = new SingleNumberIii().new Solution();
-    int[] result = solution.singleNumber(new int[] {1, 2, 1, 3, 2, 5});
-    System.out.println(result);
+    int[] result = solution.singleNumber(new int[] {2, 1, 2, 3, 4, 1});
+    System.out.println(result[0] + ", " + result[1]);
   }
   // leetcode submit region begin(Prohibit modification and deletion)
   class Solution {
     public int[] singleNumber(int[] nums) {
-      Map<Integer, Integer> map = new HashMap<>();
-      List<Integer> result = new ArrayList<>();
-      for (int i = 0; i < nums.length; i++) {
-        map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+      int xorVal = 0;
+      for (int num : nums) {
+        xorVal ^= num;
       }
-      for (Map.Entry<Integer, Integer> e : map.entrySet()) {
-        if (e.getValue() == 1) {
-          result.add(e.getKey());
+      xorVal = (xorVal & (xorVal - 1)) ^ xorVal;
+
+      int res[] = new int[2];
+      for (int num : nums) {
+        if ((num & xorVal) == 0) {
+          res[0] ^= num;
+        } else {
+          res[1] ^= num;
         }
       }
-      return new int[] {result.get(0), result.get(1)};
+      return res;
     }
   }
   // leetcode submit region end(Prohibit modification and deletion)
