@@ -34,14 +34,28 @@
 
 package com.shuzijun.leetcode.editor.cn;
 
-import union.UF;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class SurroundedRegions {
   public static void main(String[] args) {
     Solution solution = new SurroundedRegions().new Solution();
+    // [["X","X","X","X"],["X","O","O","X"],["X","O","O","X"],["X","O","X","X"]]
+    char[][] board =
+        new char[][] {
+          {'X', 'O', 'X', 'X'},
+          {'O', 'X', 'O', 'X'},
+          {'X', 'O', 'X', 'O'},
+          {'O', 'X', 'O', 'X'},
+          {'X', 'O', 'X', 'O'},
+          {'O', 'X', 'O', 'X'}
+        };
+    solution.solve(board);
+    System.out.println(board);
   }
   // leetcode submit region begin(Prohibit modification and deletion)
   class Solution {
+    // dfs
     public void solve(char[][] board) {
       // border judge
       if (board.length == 0) {
@@ -49,123 +63,63 @@ public class SurroundedRegions {
       }
       int m = board.length;
       int n = board[0].length;
-      UF uf = new UF(m * n + 1);
-      int dumpy = m * n;
-
+      Queue<int[]> queue = new LinkedList<>();
+      byte[][] visited = new byte[m][n];
+      // mark the element to 'N'(not replaced) which stand at the border of the board and whose
+      // value is 'O'
       for (int i = 0; i < m; i++) {
         if (board[i][0] == 'O') {
-          uf.union(dumpy, n * i);
+          board[i][0] = 'N';
+          queue.add(new int[] {i, 0});
         }
-        if (board[i][n - 1  ] == 'O') {
-          uf.union(dumpy, n * i + n - 1);
+        if (board[i][n - 1] == 'O') {
+          board[i][n - 1] = 'N';
+          queue.add(new int[] {i, n - 1});
         }
       }
-      for (int i = 0; i < n; i++) {
+      for (int i = 1; i < n - 1; i++) {
         if (board[0][i] == 'O') {
-          uf.union(dumpy, i);
+          board[0][i] = 'N';
+          queue.add(new int[] {0, i});
         }
         if (board[m - 1][i] == 'O') {
-          uf.union(dumpy, (m - 1) * n + i);
+          board[m - 1][i] = 'N';
+          queue.add(new int[] {m - 1, i});
         }
       }
-
-      int[][] direction = new int[][] {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-      for (int i = 1; i < m - 1; i++) {
-        for (int j = 1; j < n - 1; j++) {
-          if (board[i][j] == 'O') {
+      int[][] direction = new int[][] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+      // begin bfs if the value is 'N'
+      while (!queue.isEmpty()) {
+        int sz = queue.size();
+        for (int i = 0; i < sz; i++) {
+          int[] cur = queue.poll();
+          if (board[cur[0]][cur[1]] == 'N' && visited[cur[0]][cur[1]] == 0) {
+            // expand
             for (int k = 0; k < 4; k++) {
-              int x = i + direction[k][0];
-              int y = j + direction[k][1];
-              if (board[x][y] == 'O') {
-                uf.union(i * n + j, x * n + y);
+              int x = cur[0] + direction[k][0];
+              int y = cur[1] + direction[k][1];
+              if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'O') {
+                board[x][y] = 'N';
+                queue.add(new int[] {x, y});
               }
             }
           }
+          visited[cur[0]][cur[1]] = 1;
         }
       }
-
+      // replace 'Z' with 'O','O' with 'Z'
       for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
-          if (!uf.connected(dumpy, i * n + j)) {
-            board[i][j]='X';
+          if (board[i][j] == 'O') {
+            board[i][j] = 'X';
+          }
+          if (board[i][j] == 'N') {
+            board[i][j] = 'O';
           }
         }
       }
     }
   }
-
-  class UF {
-    //  记录联通分量的个数
-    private int count;
-    //  记录节点的父节点，例如x的父节点为parent[x]
-    private int[] parent;
-
-    private int size[];
-
-    public UF(int count) {
-      this.count = count;
-      // when init UF, the node point themself.
-      // 初始化时，节点指向其本身
-      parent = new int[count];
-      size = new int[count];
-      for (int i = 0; i < count; i++) {
-        parent[i] = i;
-        size[i] = 1;
-      }
-    }
-
-    /**
-     * 返回一个节点的根节点
-     *
-     * @param x 目标节点
-     * @return 目标节点根节点
-     */
-    public int find(int x) {
-      while (x != parent[x]) {
-        parent[x] = parent[parent[x]];
-        x = parent[x];
-      }
-      return x;
-    }
-
-    /**
-     * @param p
-     * @param q
-     */
-    public void union(int p, int q) {
-      if (connected(p, q)) {
-        return;
-      }
-      int rootP = find(p);
-      int rootQ = find(q);
-      if (size[rootP] > size[rootQ]) {
-        parent[rootQ] = rootP;
-        size[rootP] += size[rootQ];
-      } else {
-        parent[rootP] = rootQ;
-        size[rootQ] += size[rootP];
-      }
-      count--;
-    }
-
-    /**
-     * 判断两个并查集是否联通
-     *
-     * @param p
-     * @param q
-     * @return
-     */
-    public boolean connected(int p, int q) {
-      int parentP = find(p);
-      int parentQ = find(q);
-      return parentP == parentQ;
-    }
-    public int count(){
-      return this.count;
-    }
-  }
-
   // leetcode submit region end(Prohibit modification and deletion)
 
 }
-

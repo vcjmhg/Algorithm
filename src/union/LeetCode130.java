@@ -1,6 +1,9 @@
 package union;
 
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class LeetCode130 {
     /**
      * 使用交并集解决棋盘替换问题
@@ -57,6 +60,74 @@ public class LeetCode130 {
             for (int j = 0; j < n; j++) {
                 if (!uf.connected(dumpy, i * n + j)) {
                     board[i][j]='X';
+                }
+            }
+        }
+    }
+
+    /**
+     * 通过bfs来解决棋盘问题
+     * @param board
+     */
+    public void solve2(char[][] board) {
+        // border judge
+        if (board.length == 0) {
+            return;
+        }
+        int m = board.length;
+        int n = board[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        byte[][] visited = new byte[m][n];
+        // mark the element to 'N'(not replaced) which stand at the border of the board and whose
+        // value is 'O'
+        for (int i = 0; i < m; i++) {
+            if (board[i][0] == 'O') {
+                board[i][0] = 'N';
+                queue.add(new int[] {i, 0});
+            }
+            if (board[i][n - 1] == 'O') {
+                board[i][n - 1] = 'N';
+                queue.add(new int[] {i, n - 1});
+            }
+        }
+        for (int i = 1; i < n - 1; i++) {
+            if (board[0][i] == 'O') {
+                board[0][i] = 'N';
+                queue.add(new int[] {0, i});
+            }
+            if (board[m - 1][i] == 'O') {
+                board[m - 1][i] = 'N';
+                queue.add(new int[] {m - 1, i});
+            }
+        }
+        int[][] direction = new int[][] {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        // begin bfs if the value is 'N'
+        while (!queue.isEmpty()) {
+            int sz = queue.size();
+            for (int i = 0; i < sz; i++) {
+                int[] cur = queue.poll();
+                if (board[cur[0]][cur[1]] == 'N' && visited[cur[0]][cur[1]] == 0) {
+                    // expand
+                    for (int k = 0; k < 4; k++) {
+                        int x = cur[0] + direction[k][0];
+                        int y = cur[1] + direction[k][1];
+                        if (x >= 0 && x < m && y >= 0 && y < n && board[x][y] == 'O') {
+                            board[x][y] = 'N';
+                            queue.add(new int[] {x, y});
+                        }
+                    }
+                }
+                visited[cur[0]][cur[1]] = 1;
+            }
+        }
+        // replace 'Z' with 'O','O' with 'Z'
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                }
+                if (board[i][j] == 'N') {
+                    board[i][j] = 'O';
                 }
             }
         }
