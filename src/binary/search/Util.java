@@ -3,8 +3,8 @@ package binary.search;
 public class Util {
   public static void main(String[] args) {
     Util solution = new Util();
-    int [] nums = new int[]{1,2,2,3};
-    int index = solution.binarySearch(nums,5);
+    int[] nums = new int[] {1, 2, 2, 3};
+    int index = solution.rightBound(nums, 2);
     System.out.println(index);
   }
   /**
@@ -36,23 +36,47 @@ public class Util {
     return -1;
   }
 
+  /**
+   * 寻找左边界
+   *
+   * @param nums
+   * @param target
+   * @return
+   */
   public int leftBound(int[] nums, int target) {
-    //细节1：right赋值为length，意味着搜索区间范围左闭右开
+    // 细节1：right赋值为length，意味着搜索区间范围左闭右开
     int left = 0, right = nums.length;
-    //细节2
+    // 细节2
     while (left < right) {
       int mid = left + (right - left) / 2;
       if (nums[mid] == target) {
-        //细节3
+        // 细节3
         right = mid;
       } else if (nums[mid] < target) {
         left = mid + 1;
       } else if (nums[mid] > target) {
-        //细节4
+        // 细节4
         right = mid;
       }
     }
-    //细节5
-    return left == target ? left : -1;
+    // 细节5
+    return nums[left] == target ? left : -1;
+  }
+
+  public int rightBound(int[] nums, int target) {
+    int left = 0, right = nums.length;
+    while (left < right) {
+      int mid = left + (right - left) / 2;
+      if (nums[mid] == target) {
+        //细节1
+        left = mid + 1;
+      } else if (nums[mid] < target) {
+        left = mid + 1;
+      } else if (nums[mid] > target) {
+        right = mid;
+      }
+    }
+    //细节2
+    return nums[left - 1] == target ? left - 1 : -1;
   }
 }
