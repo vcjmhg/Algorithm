@@ -5,7 +5,11 @@ import java.util.Map;
 
 public class Test {
   public static void main(String[] args) {
+<<<<<<< HEAD
     int result = new Test().fibWihtDp2(45);
+=======
+    int result = new Test().fibWihtDp2(8);
+>>>>>>> 72e947e2533d6f6adb8e24eeb68e7f7cb680dbfe
 
     System.out.println(result);
   }
@@ -47,6 +51,7 @@ public class Test {
   }
 
   public int fibWihtDp2(int n) {
+<<<<<<< HEAD
     if (n == 0) {
       return 0;
     }
@@ -57,6 +62,12 @@ public class Test {
     int sum = 0;
     for (int i = 2; i <= n; i++) {
       sum = (pre + cur);
+=======
+    int pre = 1, cur = 1;
+    int sum = 0;
+    for (int i = 3; i < n + 1; i++) {
+      sum = pre + cur;
+>>>>>>> 72e947e2533d6f6adb8e24eeb68e7f7cb680dbfe
       pre = cur;
       cur = sum;
     }
