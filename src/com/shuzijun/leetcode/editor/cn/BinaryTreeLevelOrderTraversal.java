@@ -46,7 +46,7 @@ public class BinaryTreeLevelOrderTraversal {
     node2.left = node3;
     node2.right = node4;
     List<List<Integer>> result = solution.levelOrder(root);
-    for (List<Integer> r:result){
+    for (List<Integer> r : result) {
       System.out.println(r);
     }
   }

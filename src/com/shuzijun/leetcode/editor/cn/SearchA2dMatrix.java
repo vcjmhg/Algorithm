@@ -51,7 +51,7 @@ public class SearchA2dMatrix {
       {10, 11, 16, 20},
       {23, 30, 34, 50}
     };
-    boolean flag = solution.searchMatrix(matrix,3);
+    boolean flag = solution.searchMatrix(matrix, 3);
     System.out.println(flag);
   }
   // leetcode submit region begin(Prohibit modification and deletion)

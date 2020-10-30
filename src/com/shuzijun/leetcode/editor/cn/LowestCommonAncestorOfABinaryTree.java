@@ -63,15 +63,15 @@ public class LowestCommonAncestorOfABinaryTree {
       if (root == null || p == root || q == root) {
         return root;
       }
-      TreeNode left =lowestCommonAncestor(root.left,p,q);
-      TreeNode right=lowestCommonAncestor(root.right,p,q);
-      if(left == null){
+      TreeNode left = lowestCommonAncestor(root.left, p, q);
+      TreeNode right = lowestCommonAncestor(root.right, p, q);
+      if (left == null) {
         return right;
       }
-      if (right==null){
+      if (right == null) {
         return left;
       }
-      //left equals null and left equals null
+      // left equals null and left equals null
       return root;
     }
   }

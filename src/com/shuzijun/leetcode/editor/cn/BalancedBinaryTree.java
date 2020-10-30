@@ -55,7 +55,7 @@ public class BalancedBinaryTree {
     root.right = node2;
     node2.left = node3;
     node2.right = node4;
-    
+
     System.out.println(solution.isBalanced(root));
   }
   // leetcode submit region begin(Prohibit modification and deletion)
@@ -66,7 +66,7 @@ public class BalancedBinaryTree {
    */
   class Solution {
     public boolean isBalanced(TreeNode root) {
-        return getHeight(root) >=0;
+      return getHeight(root) >= 0;
     }
 
     private int getHeight(TreeNode root) {
@@ -74,19 +74,18 @@ public class BalancedBinaryTree {
         return 0;
       }
       int leftHeight = getHeight(root.left);
-      if (leftHeight <0) {
+      if (leftHeight < 0) {
         return -1;
       }
       int rightHeight = getHeight(root.right);
-      if (rightHeight<0 ){
+      if (rightHeight < 0) {
         return -1;
       }
-      if (Math.abs(leftHeight-rightHeight)>1){
+      if (Math.abs(leftHeight - rightHeight) > 1) {
         return -1;
       }
-      return Math.max(leftHeight,rightHeight)+1;
+      return Math.max(leftHeight, rightHeight) + 1;
     }
-
   }
   // leetcode submit region end(Prohibit modification and deletion)
 

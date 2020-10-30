@@ -45,8 +45,8 @@ public class BinaryTreeZigzagLevelOrderTraversal {
    */
   class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-      //border judge
-      if (root == null){
+      // border judge
+      if (root == null) {
         return new ArrayList<>();
       }
       Queue<TreeNode> queue = new LinkedList<>();
@@ -59,9 +59,9 @@ public class BinaryTreeZigzagLevelOrderTraversal {
         LinkedList<Integer> temp = new LinkedList<>();
         for (int i = 0; i < sz; i++) {
           TreeNode cur = queue.poll();
-          if (!isReverse){
+          if (!isReverse) {
             temp.add(cur.val);
-          }else {
+          } else {
             temp.addFirst(cur.val);
           }
           if (cur.left != null) {

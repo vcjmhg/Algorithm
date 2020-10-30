@@ -123,6 +123,22 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/LongestContinuousIncreasingSubsequence.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/LongestContinuousIncreasingSubsequence.java" />
+              <option name="questionId" value="674" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/LongestIncreasingSubsequence.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/LongestIncreasingSubsequence.java" />
+              <option name="questionId" value="300" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/LowestCommonAncestorOfABinaryTree.java">
           <value>
             <LeetcodeEditor>
@@ -152,6 +168,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/NumberOfEnclaves.java" />
               <option name="questionId" value="1073" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/NumberOfLongestIncreasingSubsequence.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/NumberOfLongestIncreasingSubsequence.java" />
+              <option name="questionId" value="673" />
             </LeetcodeEditor>
           </value>
         </entry>
