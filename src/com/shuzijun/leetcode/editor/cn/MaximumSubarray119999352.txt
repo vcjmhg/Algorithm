@@ -1,0 +1,28 @@
+  class Solution {
+    public int maxSubArray(int[] nums) {
+      int m = nums.length;
+      if (m == 0) {
+        return Integer.MIN_VALUE;
+      }
+      int[] dp = new int[m];
+      dp[0] = nums[0];
+      for (int i = 0; i < m; i++) {
+        for (int j = 0; j < i; j++) {
+          dp[i] = Math.max(dp[i], nums[i] + dp[i - 1]);
+        }
+      }
+      int ans = 0;
+      for (int i = 0; i < m; i++) {
+        if (dp[i] > ans) {
+          ans = dp[i];
+        }
+      }
+      return ans;
+    }
+  }
+
+//total_testcases:202
+//total_correct:161
+//input_formatted:[-1]
+//expected_output:-1
+//code_output:0
