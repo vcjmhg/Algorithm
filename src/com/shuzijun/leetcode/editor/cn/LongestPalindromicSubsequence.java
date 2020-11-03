@@ -55,21 +55,26 @@ public class LongestPalindromicSubsequence {
       if (s.length() == 0) {
         return 0;
       }
-      int[][] dp = new int[s.length()][s.length()];
-      for (int i = 0; i < s.length(); i++) {
-        dp[i][i] = 1;
+      int n = s.length();
+      int[] dp = new int[n];
+      for (int i = 0; i < n; i++) {
+        dp[i] = 1;
       }
 
-      for (int i = dp.length - 2; i >= 0; i--) {
+      int pre, temp;
+      for (int i = n - 2; i >= 0; i--) {
+        pre = 0;
         for (int j = i + 1; j < dp.length; j++) {
+          temp = dp[j];
           if (s.charAt(i) == s.charAt(j)) {
-            dp[i][j] = dp[i + 1][j - 1] + 2;
+            dp[j] = pre + 2;
           } else {
-            dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+            dp[j] = Math.max(dp[j], dp[j - 1]);
           }
+          pre = temp;
         }
       }
-      return dp[0][s.length() - 1];
+      return dp[n - 1];
     }
   }
   // leetcode submit region end(Prohibit modification and deletion)
