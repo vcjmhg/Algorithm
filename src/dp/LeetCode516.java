@@ -33,7 +33,7 @@ public class LeetCode516 {
   }
 
   /**
-   * 通过状态压缩来对dp数组进行优化
+   * 通过状态压缩来对dp数组进行优化 
    * @param s
    * @return
    */
