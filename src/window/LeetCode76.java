@@ -1,56 +1,52 @@
 package window;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-public class LeetCode {
-  
+public class LeetCode76 {
+
   /**
-   * 使用滑动窗口的模板来解决该问题，可能会有溢出的情况发生
+   * 使用滑动窗口的模板来解决该问题，判断相等时必须使用equals不能使用==
+   *
    * @param s
    * @param t
    * @return
    */
   public String minWindow(String s, String t) {
-    Map<Character, Integer> need = new HashMap<>(), window = new HashMap<>();
+    Map<Character, Integer> need = new HashMap<>();
+    Map<Character, Integer> window = new HashMap<>();
 
-    char[] s_array = s.toCharArray(), t_array = t.toCharArray();
-    for (char c : t_array) {
+    // init need
+    for (char c : t.toCharArray()) {
       need.put(c, need.getOrDefault(c, 0) + 1);
     }
-
+    // define variable
     int left = 0, right = 0;
-    /* 已经和need匹配的字符串个数*/ int valid = 0;
-    //
-    int start = 0, len = Integer.MAX_VALUE;
+    int valid = 0;
+    int len = Integer.MAX_VALUE, start = 0;
 
     while (right < s.length()) {
-      //
-      char c = s_array[right];
-      // move to right
+      char c = s.charAt(right);
       right++;
-      // update the data of window
+      // update right window
       if (need.containsKey(c)) {
         window.put(c, window.getOrDefault(c, 0) + 1);
-        // 有一些疑问
-        if (window.get(c).equals(need.get(c))) {
+        if (need.get(c).equals(window.get(c))) {
           valid++;
         }
       }
-      // 判断右侧是否需要收缩
+
       while (valid == need.size()) {
-        // 更新最小覆盖串
-        if (right - left < len) {
+        //update len
+        if (right - left < len){
           start = left;
-          len = right - left;
+          len = right-left;
         }
-        // d是即将被移出窗口的字符
-        char d = s_array[left];
-        // left右移
+        char d = s.charAt(left);
         left++;
-        // update the date of window
-        if (need.containsKey(d)) {
-          if (window.get(d) == need.get(d)) {
+        if (need.containsKey(d)){
+          if (window.get(d).equals(need.get(d))) {
             valid--;
           }
           window.put(d, window.get(d) - 1);
@@ -58,5 +54,52 @@ public class LeetCode {
       }
     }
     return len == Integer.MAX_VALUE ? "" : s.substring(start, start + len);
+  }
+
+  /**
+   * 官方给的解决思路
+   */
+  Map<Character, Integer> ori = new HashMap<Character, Integer>();
+  Map<Character, Integer> cnt = new HashMap<Character, Integer>();
+  public String minWindow2(String s, String t) {
+    int tLen = t.length();
+    for (int i = 0; i < tLen; i++) {
+      char c = t.charAt(i);
+      ori.put(c, ori.getOrDefault(c, 0) + 1);
+    }
+    int l = 0, r = -1;
+    int len = Integer.MAX_VALUE, ansL = -1, ansR = -1;
+    int sLen = s.length();
+    while (r < sLen) {
+      ++r;
+      if (r < sLen && ori.containsKey(s.charAt(r))) {
+        cnt.put(s.charAt(r), cnt.getOrDefault(s.charAt(r), 0) + 1);
+      }
+      while (check() && l <= r) {
+        if (r - l + 1 < len) {
+          len = r - l + 1;
+          ansL = l;
+          ansR = l + len;
+        }
+        if (ori.containsKey(s.charAt(l))) {
+          cnt.put(s.charAt(l), cnt.getOrDefault(s.charAt(l), 0) - 1);
+        }
+        ++l;
+      }
+    }
+    return ansL == -1 ? "" : s.substring(ansL, ansR);
+  }
+
+  public boolean check() {
+    Iterator iter = ori.entrySet().iterator();
+    while (iter.hasNext()) {
+      Map.Entry entry = (Map.Entry) iter.next();
+      Character key = (Character) entry.getKey();
+      Integer val = (Integer) entry.getValue();
+      if (cnt.getOrDefault(key, 0) < val) {
+        return false;
+      }
+    }
+    return true;
   }
 }
