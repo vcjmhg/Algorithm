@@ -107,6 +107,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/FindAllAnagramsInAString.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/FindAllAnagramsInAString.java" />
+              <option name="questionId" value="438" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/com/shuzijun/leetcode/editor/cn/FindMinimumInRotatedSortedArray.java">
           <value>
             <LeetcodeEditor>
