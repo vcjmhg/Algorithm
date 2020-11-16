@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 全排列问题
+ */
 public class Test {
   public static void main(String[] args) {
     int[] nums = {1, 2, 3, 4};
