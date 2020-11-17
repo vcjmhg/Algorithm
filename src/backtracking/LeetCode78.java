@@ -1,10 +1,39 @@
 package backtracking;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class LeetCode78 {
+    /**
+     * 对选择的方式进行了修改，最终获得了不错的运行速度
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets2(int[] nums) {
+        LinkedList<Integer> track = new LinkedList<>();
+        Arrays.sort(nums);
+        backtrace(nums, track, 0);
+        return result;
+    }
 
+    /**
+     * @param nums 记录所有选择
+     * @param track 路径
+     */
+    private void backtrace(int[] nums, LinkedList<Integer> track, int cur) {
+        result.add(new LinkedList<>(track));
+
+        // make choice
+        for (int i = cur; i < nums.length; i++) {
+            if (!track.isEmpty() && track.getLast() >= nums[i]) {
+                continue;
+            }
+            track.add(nums[i]);
+            backtrace(nums, track, cur + 1);
+            track.removeLast();
+        }
+    }
     
     List<List<Integer>> result = new LinkedList<>();
     /**

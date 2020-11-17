@@ -29,6 +29,8 @@
 
 package com.shuzijun.leetcode.editor.cn;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,6 +50,7 @@ public class Subsets {
 
     public List<List<Integer>> subsets(int[] nums) {
       LinkedList<Integer> track = new LinkedList<>();
+      Arrays.sort(nums);
       backtrace(nums, track, 0);
       return result;
     }
@@ -58,30 +61,16 @@ public class Subsets {
      */
     private void backtrace(int[] nums, LinkedList<Integer> track, int cur) {
       result.add(new LinkedList<>(track));
-      
+
       // make choice
       for (int i = cur; i < nums.length; i++) {
-        if (track.contains(nums[i])) {
+        if (!track.isEmpty() && track.getLast() >= nums[i]) {
           continue;
         }
         track.add(nums[i]);
         backtrace(nums, track, cur + 1);
         track.removeLast();
       }
-    }
-
-    private boolean contains(LinkedList<Integer> track) {
-      if (track.size() <= 1) {
-        return false;
-      }
-      int pre = Integer.MIN_VALUE;
-      for (int cur : track) {
-        if (pre >= cur) {
-          return true;
-        }
-        pre = cur;
-      }
-      return false;
     }
   }
   // leetcode submit region end(Prohibit modification and deletion)
